@@ -1,20 +1,17 @@
-name: Build by matrix
+name: Test
 on:
   pull_request:
   push:
-    tags:
-      - v*
     branches:
       - main
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Unit test
     runs-on: ubuntu-latest
     strategy:
       matrix:
         go-version: [1.22.x]
-        os: [ubuntu-latest]
     steps:
     - name: apt update
       run: sudo apt update
@@ -26,5 +23,5 @@ jobs:
     - uses: actions/setup-go@v5
       with:
         go-version: ${{ matrix.go-version }}
-    - name: Go build
-      run: go build ./...
+    - name: Run test without integration-test
+      run: go test -v -short ./...
