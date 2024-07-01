@@ -21,6 +21,14 @@ builds:
     goos:
       - linux
       - darwin
+    goarch:
+      - amd64
+      - arm64
+    flags:
+      - -tags=static_all
+    ignore:
+      - goos: linux
+        goarch: arm64
 
 archives:
   - format: tar.gz
