@@ -1,0 +1,30 @@
+name: Build by matrix
+on:
+  pull_request:
+  push:
+    tags:
+      - v*
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.22.x]
+        os: [ubuntu-latest]
+    steps:
+    - name: apt update
+      run: sudo apt update
+    - name: apt upgrade
+      run: sudo apt upgrade
+    - name: install libsystemd-dev
+      run: sudo apt install libsystemd-dev -y
+    - uses: actions/checkout@v4
+    - uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Go build
+      run: go build ./...
