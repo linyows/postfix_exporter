@@ -19,8 +19,13 @@ builds:
   - env:
       - CGO_ENABLED=0
     goos:
-      - linux
+      #- linux
       - darwin
+    flags:
+      - -tags=static_all
+    ignore:
+      - goos: linux
+        goarch: 386
 
 archives:
   - format: tar.gz
